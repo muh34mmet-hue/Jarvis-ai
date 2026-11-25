@@ -1,8 +1,6 @@
-
 name: JARVIS APK
 
-on:
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
   build:
@@ -26,7 +24,7 @@ jobs:
       - name: Sistem paketlerini kur
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo6 cmake libffi-dev libssl-dev
+          sudo apt-get install -y git zip unzip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
 
       - name: Buildozer kur
         run: |
@@ -41,4 +39,3 @@ jobs:
         with:
           name: JARVIS-APK
           path: bin/*.apk
-          if-no-files-found: error
