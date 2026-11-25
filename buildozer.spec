@@ -1,24 +1,36 @@
-[app]
+name: JARVIS APK
 
-title = JARVIS
-package.name = jarvis
-package.domain = org.jarvis
+on:
+  workflow_dispatch:
 
-source.dir = .
-source.include_exts = py,png,jpg,kv,atlas
+jobs:
+  build:
+    runs-on: ubuntu-22.04
 
-version = 1.0
+    steps:
+      - name: Depoyu indir
+        uses: actions/checkout@v4
 
-requirements = python3,kivy
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-orientation = portrait
-fullscreen = 0
+      - name: Sistem paketlerini kur
+        run: |
+          sudo apt update
+          sudo apt install -y git zip unzip openjdk-17-jdk
 
-android.api = 35
-android.minapi = 23
-android.archs = arm64-v8a
+      - name: Buildozer kur
+        run: |
+          pip install --upgrade pip
+          pip install buildozer cython==0.29.36
 
-[buildozer]
+      - name: APK oluştur
+        run: buildozer android debug
 
-log_level = 2
-warn_on_root = 1
+      - name: APK dosyasını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: JARVIS-APK
+          path: bin/*.apk
